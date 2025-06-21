@@ -1,9 +1,16 @@
-import React from 'react'
+import { NavLink } from 'react-router-dom';
+import '../Components/common.css';
 
-const adminNavBar = () => {
+function AdminNavBar() {
   return (
-    <div>adminNavBar</div>
-  )
+    <nav className="admin-navbar">
+      <h2>Admin Panel</h2>
+      <ul className="nav-links">
+        <li><NavLink to="/admin">Dashboard</NavLink></li>
+        <li><NavLink to="/" onClick={() => localStorage.clear()}>Logout</NavLink></li>
+      </ul>
+    </nav>
+  );
 }
 
-export default adminNavBar
+export default AdminNavBar;
