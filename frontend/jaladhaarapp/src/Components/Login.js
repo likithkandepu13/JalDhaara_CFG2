@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithEmail, signInWithGoogle } from '../firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import './common.css';
 
 const Login = () => {
@@ -7,9 +7,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  const handleEmailAuth = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -21,66 +21,35 @@ const Login = () => {
     setError('');
 
     try {
-      const result = await signInWithEmail(email, password);
-
-      if (result.success) {
-        setUser(result.user);
-        console.log('Authentication successful!');
-      } else {
-        setError(result.error);
+      const response = await fetch('http://localhost:5000/donor/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
       }
-    } catch (error) {
-      setError('An unexpected error occurred');
-      console.error('Authentication error:', error);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', 'donor');
+      console.log('Donor login successful!');
+      navigate('/donor');
+    } catch (err) {
+      setError(err.message || 'An unexpected error occurred');
+      console.error('Login error:', err);
     }
 
     setLoading(false);
   };
-
-  const handleGoogleAuth = async () => {
-    setLoading(true);
-    setError('');
-
-    try {
-      const result = await signInWithGoogle();
-
-      if (result.success) {
-        setUser(result.user);
-        console.log('Google authentication successful!');
-      } else {
-        setError(result.error);
-      }
-    } catch (error) {
-      setError('Failed to sign in with Google');
-      console.error('Google auth error:', error);
-    }
-
-    setLoading(false);
-  };
-
-  if (user) {
-    return (
-      <div className="auth-container">
-        <div className="auth-card fade-in">
-          <h2>Welcome!</h2>
-          <p>Successfully logged in as: {user.email}</p>
-          <p>User ID: {user.uid}</p>
-          {user.photoURL && (
-            <img src={user.photoURL} alt="Profile" className="profile-photo" />
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="auth-container">
       <div className="auth-card fade-in">
-        <h2>Login</h2>
+        <h2>Donor Login</h2>
 
         {error && <div className="error">{error}</div>}
 
-        <form onSubmit={handleEmailAuth} className="auth-form">
+        <form onSubmit={handleLogin} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
@@ -111,18 +80,6 @@ const Login = () => {
             {loading ? 'Please wait...' : 'Login'}
           </button>
         </form>
-
-        <div className="divider" style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
-          <span>OR</span>
-        </div>
-
-        <button
-          onClick={handleGoogleAuth}
-          className="submit-btn"
-          disabled={loading}
-        >
-          {loading ? 'Please wait...' : 'Continue with Google'}
-        </button>
       </div>
     </div>
   );
