@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import DonorNavBar from '../donorNavBar';
+import DonorNavBar from './donorNavBAr';
 import './donor.css';
 
 function DonorHome() {
