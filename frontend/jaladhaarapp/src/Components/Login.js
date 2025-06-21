@@ -1,77 +1,131 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { signInWithEmail, signInWithGoogle } from '../firebase/auth';
 import './common.css';
 
-function Login() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [user, setUser] = useState(null);
 
-  // Validate form inputs
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
-    if (!formData.password) newErrors.password = 'Password is required';
-    return newErrors;
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleEmailAuth = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+
+    if (!email || !password) {
+      setError('Please fill in all fields');
       return;
     }
 
+    setLoading(true);
+    setError('');
+
     try {
-      // Mock API call (replace with actual backend endpoint)
-      const mockResponse = { token: 'mock-jwt', role: 'donor' };
-      localStorage.setItem('token', mockResponse.token);
-      localStorage.setItem('role', mockResponse.role);
-      navigate(mockResponse.role === 'admin' ? '/admin' : '/donor');
+      const result = await signInWithEmail(email, password);
+
+      if (result.success) {
+        setUser(result.user);
+        console.log('Authentication successful!');
+      } else {
+        setError(result.error);
+      }
     } catch (error) {
-      setErrors({ form: 'Login failed. Please try again.' });
+      setError('An unexpected error occurred');
+      console.error('Authentication error:', error);
     }
+
+    setLoading(false);
   };
+
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      const result = await signInWithGoogle();
+
+      if (result.success) {
+        setUser(result.user);
+        console.log('Google authentication successful!');
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      setError('Failed to sign in with Google');
+      console.error('Google auth error:', error);
+    }
+
+    setLoading(false);
+  };
+
+  if (user) {
+    return (
+      <div className="auth-container">
+        <div className="auth-card fade-in">
+          <h2>Welcome!</h2>
+          <p>Successfully logged in as: {user.email}</p>
+          <p>User ID: {user.uid}</p>
+          {user.photoURL && (
+            <img src={user.photoURL} alt="Profile" className="profile-photo" />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="auth-form">
-        {errors.form && <p className="error">{errors.form}</p>}
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={errors.email ? 'input-error' : ''}
-          />
-          {errors.email && <p className="error">{errors.email}</p>}
+      <div className="auth-card fade-in">
+        <h2>Login</h2>
+
+        {error && <div className="error">{error}</div>}
+
+        <form onSubmit={handleEmailAuth} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              disabled={loading}
+              className={error && !email ? 'input-error' : ''}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              disabled={loading}
+              className={error && !password ? 'input-error' : ''}
+            />
+          </div>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Please wait...' : 'Login'}
+          </button>
+        </form>
+
+        <div className="divider" style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
+          <span>OR</span>
         </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={errors.password ? 'input-error' : ''}
-          />
-          {errors.password && <p className="error">{errors.password}</p>}
-        </div>
-        <button type="submit" className="submit-btn">Login</button>
-      </form>
+
+        <button
+          onClick={handleGoogleAuth}
+          className="submit-btn"
+          disabled={loading}
+        >
+          {loading ? 'Please wait...' : 'Continue with Google'}
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default Login;
