@@ -6,6 +6,8 @@ import AdminHome from './admin/adminHome';
 import DonorHome from './donor/donarHome';
 import MainNavBar from './Components/mainNavBar';
 import './App.css';
+// Import our Login component to test Firebase authentication
+import Login from './Components/Login';
 
 // Simple protected route component to check JWT token and role
 const ProtectedRoute = ({ children, role }) => {
@@ -26,7 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+         
           <Route
             path="/admin"
             element={
