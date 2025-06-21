@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 import Login from './Components/Login';
-import Signup from './Components/Signup';
 import AdminHome from './admin/adminHome';
 import DonorHome from './donor/donarHome';
 import MainNavBar from './Components/mainNavBar';
@@ -22,11 +21,9 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <MainNavBar />
-        <Routes>
+        <MainNavBar />        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route
             path="/admin"
             element={
