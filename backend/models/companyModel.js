@@ -1,32 +1,38 @@
-// models/CompanyAdmin.js
+// models/Company.js
 
 const mongoose = require('mongoose');
 
-const companyAdminSchema = new mongoose.Schema(
+const companySchema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
       unique: true
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true
+    csrSpentCrores: {
+      type: Number,
+      required: true
     },
-    password: {
+    csrYear: {
       type: String,
       required: true
     },
-    company: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Company',
-      required: true
+    csrFocusAreas: {
+      type: [String],
+      default: []
+    },
+    csrExpenditureBreakup: {
+      type: Map,
+      of: Number,
+      default: {}
+    },
+    budgetPercentage: {
+      type: Number // optional; you can specify what it represents in UI (e.g., education/healthcare %)
     }
   },
   {
-    timestamps: true
+    timestamps: true // Adds createdAt and updatedAt
   }
 );
 
-module.exports = mongoose.model('CompanyAdmin', companyAdminSchema);
+module.exports = mongoose.model('Company', companySchema);

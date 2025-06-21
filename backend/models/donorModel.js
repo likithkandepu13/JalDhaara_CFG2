@@ -1,29 +1,27 @@
+// models/Donor.js
+
 const mongoose = require('mongoose');
 
-const companySchema = new mongoose.Schema(
+const donorSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
-      unique: true
-    },
-    contactEmail: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    password: {
-      type: String,
       required: true
     },
-    createdAt: {
-      type: Date,
-      default: Date.now
+    email: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Company'
     }
   },
   {
-    timestamps: true // Adds createdAt and updatedAt automatically
+    timestamps: true // Adds createdAt and updatedAt
   }
 );
 
-module.exports = mongoose.model('Company', companySchema);
+module.exports = mongoose.model('Donor', donorSchema);
