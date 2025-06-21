@@ -1,0 +1,471 @@
+/* Donate Page Styles */
+.donate-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0066cc 0%, #004499 50%, #003366 100%);
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.donate-hero {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(rgba(0, 102, 204, 0.8), rgba(0, 68, 153, 0.9)), 
+              url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10c20-5 40 5 60 0s40-5 60 0v10H0z" fill="%23ffffff" opacity="0.1"/></svg>');
+  background-size: cover;
+}
+
+.donate-hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.donate-hero p {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.donate-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  padding: 60px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Donation Form Section */
+.form-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-container h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: #87ceeb;
+  text-align: center;
+}
+
+/* Donation Type */
+.donation-type {
+  margin-bottom: 30px;
+}
+
+.type-label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #87ceeb;
+  font-weight: bold;
+}
+
+.type-options {
+  display: flex;
+  gap: 15px;
+}
+
+.type-button {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid rgba(135, 206, 235, 0.5);
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.type-button:hover {
+  border-color: #87ceeb;
+  background: rgba(135, 206, 235, 0.1);
+}
+
+.type-button.active {
+  background: linear-gradient(45deg, #87ceeb, #4682b4);
+  border-color: #87ceeb;
+  color: white;
+}
+
+/* Amount Selection */
+.amount-selection {
+  margin-bottom: 30px;
+}
+
+.amount-label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #87ceeb;
+  font-weight: bold;
+}
+
+.preset-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.amount-button {
+  padding: 15px 10px;
+  border: 2px solid rgba(135, 206, 235, 0.5);
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.amount-button:hover {
+  border-color: #87ceeb;
+  background: rgba(135, 206, 235, 0.1);
+}
+
+.amount-button.selected {
+  background: linear-gradient(45deg, #87ceeb, #4682b4);
+  border-color: #87ceeb;
+  color: white;
+}
+
+.custom-amount {
+  margin-top: 15px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid rgba(135, 206, 235, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #87ceeb;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Project Selection */
+.project-selection {
+  margin-bottom: 30px;
+}
+
+.project-label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #87ceeb;
+  font-weight: bold;
+}
+
+.project-select {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid rgba(135, 206, 235, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.project-select:focus {
+  outline: none;
+  border-color: #87ceeb;
+}
+
+.project-select option {
+  background: #003366;
+  color: white;
+}
+
+.project-impact {
+  font-size: 0.9rem;
+  color: #87ceeb;
+  font-style: italic;
+}
+
+/* Impact Message */
+.impact-message {
+  background: rgba(135, 206, 235, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  border: 1px solid rgba(135, 206, 235, 0.3);
+}
+
+/* Donation Summary */
+.donation-summary {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #87ceeb;
+}
+
+/* Donate Button */
+.donate-button {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(45deg, #87ceeb, #4682b4);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.donate-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(135, 206, 235, 0.4);
+  background: linear-gradient(45deg, #4682b4, #87ceeb);
+}
+
+.donate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secure-note {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  color: #87ceeb;
+}
+
+/* Info Section */
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.info-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #87ceeb;
+}
+
+.info-card p {
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Other Ways to Help */
+.other-ways {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.other-ways h3 {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #87ceeb;
+  text-align: center;
+}
+
+.help-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.help-option {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid #87ceeb;
+}
+
+.help-option strong {
+  display: block;
+  color: #87ceeb;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.help-option p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.help-link {
+  color: #87ceeb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.help-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Success Stories */
+.success-stories {
+  padding: 60px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.success-stories h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #87ceeb;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.story-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.story-image {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.story-card h4 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #87ceeb;
+}
+
+.story-card p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.story-meta {
+  color: #87ceeb;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .donate-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .donate-hero {
+    padding: 60px 15px;
+  }
+  
+  .donate-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .donate-hero p {
+    font-size: 1.1rem;
+  }
+  
+  .donate-content {
+    padding: 40px 15px;
+  }
+  
+  .form-container {
+    padding: 25px;
+  }
+  
+  .preset-amounts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .type-options {
+    flex-direction: column;
+  }
+  
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .success-stories {
+    padding: 40px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .donate-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .form-container {
+    padding: 20px;
+  }
+  
+  .preset-amounts {
+    grid-template-columns: 1fr;
+  }
+  
+  .story-card {
+    padding: 20px;
+  }
+}
