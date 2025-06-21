@@ -1,0 +1,23 @@
+[
+    {
+        "companyName": "AquaPure Ltd",
+        "username": "aquapure_donor",
+        "password": "securePass123",
+        "phoneNumber": "+1234567890",
+        "email": "contact@aquapure.com"
+    },
+    {
+        "companyName": "HydroAid Inc",
+        "username": "hydroaid_donor",
+        "password": "hydroPass456",
+        "phoneNumber": "+1987654321",
+        "email": "info@hydroaid.com"
+    },
+    {
+        "companyName": "WaterWorks Co",
+        "username": "waterworks_donor",
+        "password": "waterPass789",
+        "phoneNumber": "+1122334455",
+        "email": "support@waterworks.com"
+    }
+]

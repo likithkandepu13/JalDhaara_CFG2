@@ -1,0 +1,231 @@
+[
+  {
+    "company": "Reliance Industries Limited",
+    "csr_spent_crores": 922,
+    "csr_year": "FY 20-21",
+    "csr_through": "Reliance Foundation",
+    "csr_focus_areas": [
+      "Education",
+      "Healthcare",
+      "Rural Development",
+      "Sports Promotion",
+      "Environmental Sustainability",
+      "COVID Relief",
+      "Livelihood Enhancement"
+    ],
+    "csr_expenditure_breakup": {
+      "Healthcare": 116,
+      "Education": 444,
+      "COVID Relief": 192,
+      "Livelihood Enhancement": 42,
+      "Sports Promotion": 49
+    },
+    "education_budget_percent": 49
+  },
+  {
+    "company": "Tata Consultancy Services Limited",
+    "csr_spent_crores": 674,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Education",
+      "Healthcare",
+      "Art and Culture Promotion",
+      "Youth Entrepreneurship",
+      "Community Development"
+    ],
+    "csr_expenditure_breakup": {
+      "PM CARES Fund": 256,
+      "Education": 13,
+      "COVID Relief": 17,
+      "Healthcare": 5,
+      "Community Development": 5
+    }
+  },
+  {
+    "company": "HDFC Bank Limited",
+    "csr_spent_crores": 634.91,
+    "csr_year": "FY 20-21",
+    "csr_projects_count": 200,
+    "csr_focus_areas": [
+      "Financial Literacy",
+      "Education",
+      "Rural Development",
+      "Healthcare",
+      "COVID Relief",
+      "Farmers' Livelihood",
+      "Skill Development",
+      "Startups and Entrepreneurship"
+    ],
+    "csr_expenditure_breakup": {
+      "Financial Literacy": 233.31,
+      "Rural Development": 140,
+      "COVID Relief": 100.97,
+      "Education": 47.31,
+      "Farmers' Livelihood": 17.79,
+      "Skill Development": 16.78,
+      "Startups and Entrepreneurship": 7
+    }
+  },
+  {
+    "company": "Oil and Natural Gas Corporation Limited",
+    "csr_spent_crores": 552.98,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Rural Development",
+      "Education",
+      "Environment",
+      "Healthcare",
+      "Sports"
+    ],
+    "csr_expenditure_breakup": {
+      "PM CARES Fund": 300,
+      "Education": 57,
+      "Rural Development": 31,
+      "Healthcare": 21,
+      "Sports Promotion": 4.6
+    }
+  },
+  {
+    "company": "Indian Oil Corporation Limited",
+    "csr_spent_crores": 460.38,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Skill Development",
+      "Healthcare",
+      "National Heritage Conservation",
+      "Education",
+      "Sustainability Initiatives",
+      "Sports Promotion"
+    ],
+    "csr_expenditure_breakup": {
+      "PM CARES Fund": 225,
+      "Education": 30.9,
+      "Skill Development": 24,
+      "Sustainability Initiatives": 16,
+      "COVID Relief": 13
+    }
+  },
+  {
+    "company": "NTPC Limited",
+    "csr_spent_crores": 418.87,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "Healthcare",
+      "Rural Development",
+      "Environment Sustainability",
+      "Sports",
+      "Education",
+      "Disaster Management"
+    ],
+    "csr_expenditure_breakup": {
+      "Education": 64,
+      "Swachh Bharat Abhiyan": 33,
+      "Rural Development": 31
+    },
+    "healthcare_budget_percent": 66
+  },
+  {
+    "company": "ITC Limited",
+    "csr_spent_crores": 365.43,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "Sanitation",
+      "Healthcare",
+      "Agriculture",
+      "COVID Relief",
+      "Disaster Relief"
+    ],
+    "csr_expenditure_breakup": {
+      "Healthcare": 45,
+      "Agricultural Projects": 45,
+      "COVID Relief (PM CARES Fund)": 100,
+      "Disaster Relief": 54.32
+    }
+  },
+  {
+    "company": "Infosys Limited",
+    "csr_spent_crores": 325.32,
+    "csr_year": "FY 20-21",
+    "csr_through": "Infosys Foundation",
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Community Development",
+      "Heritage Conservation",
+      "Armed Forces Support",
+      "Sustainability Development",
+      "Art and Culture"
+    ]
+  },
+  {
+    "company": "Wipro Limited",
+    "csr_spent_crores": 251.19,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "Education for Underprivileged",
+      "Education for Children with Disability",
+      "Community Ecology",
+      "Agroforestry",
+      "Urban Solid Waste Management"
+    ]
+  },
+  {
+    "company": "Power Grid Corporation of India Limited",
+    "csr_spent_crores": 240.59,
+    "csr_year": "FY 20-21",
+    "csr_projects_count": 270,
+    "csr_focus_areas": [
+      "Sanitation",
+      "Healthcare",
+      "Education",
+      "Environment",
+      "Rural Development",
+      "Art and Culture Promotion"
+    ]
+  },
+  {
+    "company": "Tata Steel Limited",
+    "csr_spent_crores": 221.98,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "Education",
+      "Disability Programs",
+      "Tribal Skill Development",
+      "Livelihood Enhancement",
+      "Community Development"
+    ]
+  },
+  {
+    "company": "Hindustan Zinc Limited",
+    "csr_spent_crores": 214.03,
+    "csr_year": "FY 20-21",
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Healthcare",
+      "Environment",
+      "Safety",
+      "Rural Development",
+      "Child Welfare",
+      "Education"
+    ],
+    "csr_expenditure_breakup": {
+      "COVID Relief": 116
+    }
+  },
+  {
+    "company": "Mahanadi Coalfields Limited",
+    "csr_spent_crores": 205.28,
+    "csr_year": "FY 20-21",
+    "csr_projects_count": 500,
+    "csr_focus_areas": [
+      "COVID Relief",
+      "Healthcare",
+      "Community Development"
+    ],
+    "csr_expenditure_breakup": {
+      "COVID Hospital": 120
+    }
+  }
+]
