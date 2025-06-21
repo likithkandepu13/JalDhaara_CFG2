@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
-import Login from './Components/Login';
-import Signup from './Components/Signup';
+
 import AdminHome from './admin/adminHome';
 import DonorHome from './donor/donarHome';
 import MainNavBar from './Components/mainNavBar';
