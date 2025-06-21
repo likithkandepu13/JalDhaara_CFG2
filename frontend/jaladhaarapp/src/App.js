@@ -1,12 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
-
+import Login from './Components/Login';
 import AdminHome from './admin/adminHome';
 import DonorHome from './donor/donarHome';
 import MainNavBar from './Components/mainNavBar';
 import './App.css';
-// Import our Login component to test Firebase authentication
-import Login from './Components/Login';
 
 // Simple protected route component to check JWT token and role
 const ProtectedRoute = ({ children, role }) => {
@@ -23,11 +21,13 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <MainNavBar />
-        <Routes>
+        <MainNavBar />        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+<<<<<<< HEAD
          
+=======
+>>>>>>> 9ded8f297d45dcb9b4b56cc7256cd71504bf5116
           <Route
             path="/admin"
             element={
