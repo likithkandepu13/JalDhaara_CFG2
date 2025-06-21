@@ -67,10 +67,15 @@ const validateDonorLogin = [
     .notEmpty()
     .withMessage('Password is required')
 ];
-
+const validateDeclineInvite = [
+  body('inviteToken')
+    .notEmpty()
+    .withMessage('Invite token is required')
+];
 module.exports = {
   validateAdmin,
   validateDonorInvite,
   validateDonorRegistration,
-  validateDonorLogin
+  validateDonorLogin,
+  validateDeclineInvite
 };

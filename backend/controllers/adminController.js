@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
+const mongoose=require('mongoose');
 
 /**
  * Register a new admin
@@ -115,9 +116,13 @@ const sendDonorInvite = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
-    const { email, companyName } = req.body;
+const { email, companyName } = req.body;
     const adminId = req.admin.id; // From JWT auth middleware
+
+    // Check MongoDB connection state
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
 
     // Check if donor already exists
     let donor = await Donor.findOne({ email });
@@ -152,10 +157,11 @@ const sendDonorInvite = async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    // Invite link
-    const inviteLink = `${process.env.FRONTEND_URL}/donor/accept-invite/${inviteToken}`;
+    // Invite links
+    const acceptLink = `${process.env.FRONTEND_URL}/donor/accept-invite/${inviteToken}`;
+    const declineLink = `${process.env.FRONTEND_URL}/donor/decline-invite/${inviteToken}`;
 
-    // Email content
+    // Email content with Accept and Decline buttons
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -163,9 +169,12 @@ const sendDonorInvite = async (req, res) => {
       html: `
         <h3>Dear ${companyName} Representative,</h3>
         <p>Jaldhaara Foundation invites you to partner with us to provide clean drinking water and sanitation to underserved communities in India.</p>
-        <p>Please click the link below to accept this invitation and register as a donor:</p>
-        <a href="${inviteLink}">Accept Invitation</a>
-        <p>This link is valid for 24 hours.</p>
+        <p>Please choose an option below:</p>
+        <p>
+          <a href="${acceptLink}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Accept Invitation</a>
+          <a href="${declineLink}" style="display: inline-block; padding: 10px 20px; background-color: #f44336; color: white; text-decoration: none; border-radius: 5px; margin-left: 10px;">Decline Invitation</a>
+        </p>
+        <p>These links are valid for 24 hours.</p>
         <p>Thank you for considering our cause!</p>
         <p>Jaldhaara Foundation</p>
       `
@@ -177,7 +186,9 @@ const sendDonorInvite = async (req, res) => {
     res.status(200).json({ message: 'Invite sent successfully' });
   } catch (err) {
     console.error('Error sending donor invite:', err);
-    res.status(500).json({ message: 'Internal server error' });
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
   }
 };
 
@@ -238,10 +249,44 @@ const registerDonor = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+const declineInvite = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { inviteToken } = req.body;
+
+    // Verify invite token
+    let decoded;
+    try {
+      decoded = jwt.verify(inviteToken, process.env.JWT_SECRET);
+    } catch (err) {
+      return res.status(400).json({ message: 'Invalid or expired invite token' });
+    }
+
+    // Find donor by ID from token
+    let donor = await Donor.findById(decoded.donorId);
+    if (!donor || donor.status !== 'pending') {
+      return res.status(400).json({ message: 'Invalid or non-pending donor invite' });
+    }
+
+    // Update donor status to rejected
+    donor.status = 'rejected';
+    await donor.save();
+
+    res.status(200).json({ message: 'Invitation declined successfully' });
+  } catch (err) {
+    console.error('Error declining donor invite:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 module.exports = {
   registerAdmin,
   loginAdmin,
   sendDonorInvite,
-  registerDonor
+  registerDonor,
+  declineInvite
 };
