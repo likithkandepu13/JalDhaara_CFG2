@@ -24,10 +24,6 @@ function App() {
         <MainNavBar />        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-<<<<<<< HEAD
-         
-=======
->>>>>>> 9ded8f297d45dcb9b4b56cc7256cd71504bf5116
           <Route
             path="/admin"
             element={

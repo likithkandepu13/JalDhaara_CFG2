@@ -1,42 +1,32 @@
-// Login Component
-// This component handles user authentication with email/password and Google sign-in
-
 import React, { useState } from 'react';
 import { signInWithEmail, signInWithGoogle } from '../firebase/auth';
-import './common.css'; // We'll create this CSS file for styling
+import './common.css';
 
 const Login = () => {
-  // State variables to manage form data and UI state
-  const [email, setEmail] = useState(''); // Stores email input
-  const [password, setPassword] = useState(''); // Stores password input
-  const [loading, setLoading] = useState(false); // Shows loading state during authentication
-  const [error, setError] = useState(''); // Stores error messages
-  const [user, setUser] = useState(null); // Stores logged-in user information
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [user, setUser] = useState(null);
 
-  // Function to handle email/password form submission
   const handleEmailAuth = async (e) => {
-    e.preventDefault(); // Prevent form from refreshing the page
-    
-    // Basic validation - check if email and password are provided
+    e.preventDefault();
+
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
 
-    setLoading(true); // Show loading state
-    setError(''); // Clear any previous errors
+    setLoading(true);
+    setError('');
 
     try {
-      // Sign in with email and password
       const result = await signInWithEmail(email, password);
 
       if (result.success) {
-        // Authentication successful
         setUser(result.user);
         console.log('Authentication successful!');
-        // You can redirect user or update app state here
       } else {
-        // Show error message if authentication failed
         setError(result.error);
       }
     } catch (error) {
@@ -44,17 +34,16 @@ const Login = () => {
       console.error('Authentication error:', error);
     }
 
-    setLoading(false); // Hide loading state
+    setLoading(false);
   };
 
-  // Function to handle Google sign-in
   const handleGoogleAuth = async () => {
     setLoading(true);
     setError('');
 
     try {
       const result = await signInWithGoogle();
-      
+
       if (result.success) {
         setUser(result.user);
         console.log('Google authentication successful!');
@@ -69,11 +58,10 @@ const Login = () => {
     setLoading(false);
   };
 
-  // If user is logged in, show welcome message
   if (user) {
     return (
-      <div className="login-container">
-        <div className="login-success">
+      <div className="auth-container">
+        <div className="auth-card fade-in">
           <h2>Welcome!</h2>
           <p>Successfully logged in as: {user.email}</p>
           <p>User ID: {user.uid}</p>
@@ -84,18 +72,16 @@ const Login = () => {
       </div>
     );
   }
-  // Main login form
+
   return (
-    <div className="login-container">
-      <div className="login-form">
+    <div className="auth-container">
+      <div className="auth-card fade-in">
         <h2>Login</h2>
-        
-        {/* Display error message if there's an error */}
-        {error && <div className="error-message">{error}</div>}
-        
-        {/* Email and Password Form */}
-        <form onSubmit={handleEmailAuth}>
-          <div className="input-group">
+
+        {error && <div className="error">{error}</div>}
+
+        <form onSubmit={handleEmailAuth} className="auth-form">
+          <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -103,11 +89,12 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              disabled={loading} // Disable input during loading
+              disabled={loading}
+              className={error && !email ? 'input-error' : ''}
             />
           </div>
-          
-          <div className="input-group">
+
+          <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -116,24 +103,24 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               disabled={loading}
+              className={error && !password ? 'input-error' : ''}
             />
           </div>
-            {/* Submit button */}
-          <button type="submit" className="auth-button" disabled={loading}>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
             {loading ? 'Please wait...' : 'Login'}
           </button>
         </form>
-        
-        {/* Divider */}
-        <div className="divider">
+
+        <div className="divider" style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
           <span>OR</span>
         </div>
-        
-        {/* Google Sign-in Button */}
-        <button 
-          onClick={handleGoogleAuth} 
-          className="google-button"
-          disabled={loading}        >
+
+        <button
+          onClick={handleGoogleAuth}
+          className="submit-btn"
+          disabled={loading}
+        >
           {loading ? 'Please wait...' : 'Continue with Google'}
         </button>
       </div>
