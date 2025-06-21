@@ -19,7 +19,10 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-
+const adminRoutes=require('./routes/adminRoutes')
+app.use('/admin',adminRoutes);
+const donorRoutes=require('./routes/donorRoutes')
+app.use('/donor',donorRoutes);
 
 const PORT = process.env.PORT 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,22 +1,33 @@
 // models/Donor.js
-
 const mongoose = require('mongoose');
 
 const donorSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true
-    },
     email: {
-      type: String
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true
     },
-    phone: {
-      type: String
+    password: {
+      type: String,
+      required: false
     },
-    company: {
+    companyName: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'accepted', 'rejected'],
+      default: 'pending'
+    },
+    invitedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Company'
+      ref: 'Admin',
+      required: true
     }
   },
   {
