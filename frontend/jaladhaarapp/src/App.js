@@ -8,6 +8,7 @@ import Donate from './Components/Donate';
 import Contact from './Components/Contact';
 import AdminHome from './admin/adminHome';
 import DonorHome from './donor/donarHome';
+import ViewCompanies from './donor/ViewCompanies';
 import MainNavBar from './Components/mainNavBar';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
@@ -37,22 +38,31 @@ function App() {
             <Route path="/donate" element={<Donate />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute role="admin">
-                <AdminHome />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/donor"
-            element={
-              <ProtectedRoute role="donor">
-                <DonorHome />
-              </ProtectedRoute>
-            }
-          />          </Routes>
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminHome />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/donor"
+              element={
+                <ProtectedRoute role="donor">
+                  <DonorHome />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/donor/companies"
+              element={
+                <ProtectedRoute role="donor">
+                  <ViewCompanies />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
         </div>
       </Router>
     </AuthProvider>
