@@ -17,7 +17,16 @@ const validateAdmin = [
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long')
 ];
-
+const validateProfileUpdate = [
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Email must be valid'),
+  body('companyName')
+    .optional()
+    .notEmpty()
+    .withMessage('Company name is required')
+];
 /**
  * Validation rules for sending donor invite email
  */
@@ -72,10 +81,21 @@ const validateDeclineInvite = [
     .notEmpty()
     .withMessage('Invite token is required')
 ];
+const validatePasswordChange = [
+  body('oldPassword').notEmpty().withMessage('Old password is required'),
+  body('newPassword')
+    .notEmpty()
+    .withMessage('New password is required')
+    .isLength({ min: 6 })
+    .withMessage('New password must be at least 6 characters long')
+];
+module.exports = { validatePasswordChange };
 module.exports = {
   validateAdmin,
   validateDonorInvite,
   validateDonorRegistration,
   validateDonorLogin,
-  validateDeclineInvite
+  validateDeclineInvite,
+  validatePasswordChange,
+  validateProfileUpdate
 };

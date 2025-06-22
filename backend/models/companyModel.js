@@ -1,5 +1,3 @@
-// models/Company.js
-
 const mongoose = require('mongoose');
 
 const companySchema = new mongoose.Schema(
@@ -22,16 +20,25 @@ const companySchema = new mongoose.Schema(
       default: []
     },
     csrExpenditureBreakup: {
-      type: Map,
-      of: Number,
-      default: {}
+      type: [
+        {
+          category: { type: String, required: true },
+          amount: { type: Number, required: true }
+        }
+      ],
+      default: []
     },
     budgetPercentage: {
-      type: Number // optional; you can specify what it represents in UI (e.g., education/healthcare %)
+      type: Number
+    },
+    plantInitiative: {
+      type: String,
+      enum: ['hygiene', 'clean water', 'sanitation'],
+     
     }
   },
   {
-    timestamps: true // Adds createdAt and updatedAt
+    timestamps: true
   }
 );
 

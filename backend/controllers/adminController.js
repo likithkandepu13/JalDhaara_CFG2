@@ -1,15 +1,14 @@
 // controllers/adminController.js
 const Admin = require('../models/adminModel');
 const Donor = require('../models/donorModel');
+const Company = require('../models/companyModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-/**
- * Register a new admin
- */
+// Your existing code (unchanged): registerAdmin, loginAdmin, sendDonorInvite, registerDonor, declineInvite, createCompany
 const registerAdmin = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -58,9 +57,6 @@ const registerAdmin = async (req, res) => {
   }
 };
 
-/**
- * Login an admin
- */
 const loginAdmin = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -104,19 +100,13 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-/**
- * Send invite email to potential donor
- */
-/**
- * Send invite email to potential donor
- */
 const sendDonorInvite = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-const { email, companyName } = req.body;
+    const { email, companyName } = req.body;
     const adminId = req.admin.id; // From JWT auth middleware
 
     // Check MongoDB connection state
@@ -192,9 +182,6 @@ const { email, companyName } = req.body;
   }
 };
 
-/**
- * Register a donor after accepting invite
- */
 const registerDonor = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -249,6 +236,7 @@ const registerDonor = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 const declineInvite = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -283,10 +271,181 @@ const declineInvite = async (req, res) => {
   }
 };
 
+const createCompany = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { username, csrSpentCrores, csrYear, csrFocusAreas, csrExpenditureBreakup, budgetPercentage, plantInitiative} = req.body;
+
+    // Check MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
+
+    // Create new company
+    const company = new Company({
+      username,
+      csrSpentCrores,
+      csrYear,
+      csrFocusAreas: csrFocusAreas || [],
+      csrExpenditureBreakup: csrExpenditureBreakup || {},
+      budgetPercentage
+    });
+
+    await company.save();
+
+    res.status(201).json({ message: 'Company created successfully', company });
+  } catch (err) {
+    console.error('Error creating company:', err);
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Updated Company Methods with csrYear as Constraint
+const getCompanies = async (req, res) => {
+  try {
+    // Check MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
+
+    // Get csrYear from query parameter
+    const { csrYear } = req.query;
+    let query = {};
+    if (csrYear) {
+      query.csrYear = csrYear; // Filter by csrYear if provided
+    }
+
+    const companies = await Company.find(query);
+    res.status(200).json(companies);
+  } catch (err) {
+    console.error('Error fetching companies:', err);
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const getCompanyById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { csrYear } = req.query;
+
+    // Check MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
+
+    // Find company by ID and optionally check csrYear
+    let query = { _id: id };
+    if (csrYear) {
+      query.csrYear = csrYear;
+    }
+
+    const company = await Company.findOne(query);
+    if (!company) {
+      return res.status(404).json({ message: 'Company not found or does not match the specified CSR year' });
+    }
+
+    res.status(200).json(company);
+  } catch (err) {
+    console.error('Error fetching company:', err);
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const updateCompany = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, csrSpentCrores, csrYear, csrFocusAreas, csrExpenditureBreakup, budgetPercentage ,plantInitiative} = req.body;
+    const { requiredCsrYear } = req.query; // Use query to specify required CSR year
+
+    // Check MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
+
+    // Find company by ID and check requiredCsrYear if provided
+    let query = { _id: id };
+    if (requiredCsrYear) {
+      query.csrYear = requiredCsrYear;
+    }
+
+    const company = await Company.findOne(query);
+    if (!company) {
+      return res.status(404).json({ message: 'Company not found or does not match the specified CSR year' });
+    }
+
+    // Update fields
+    company.username = username || company.username;
+    company.csrSpentCrores = csrSpentCrores || company.csrSpentCrores;
+    company.csrYear = csrYear || company.csrYear;
+    company.csrFocusAreas = csrFocusAreas || company.csrFocusAreas;
+    company.csrExpenditureBreakup = csrExpenditureBreakup || company.csrExpenditureBreakup;
+    company.budgetPercentage = budgetPercentage !== undefined ? budgetPercentage : company.budgetPercentage;
+
+    await company.save();
+
+    res.status(200).json({ message: 'Company updated successfully', company });
+  } catch (err) {
+    console.error('Error updating company:', err);
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const deleteCompany = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { csrYear } = req.query;
+
+    // Check MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB is not connected');
+    }
+
+    // Find and delete company by ID and optionally check csrYear
+    let query = { _id: id };
+    if (csrYear) {
+      query.csrYear = csrYear;
+    }
+
+    const company = await Company.findOneAndDelete(query);
+    if (!company) {
+      return res.status(404).json({ message: 'Company not found or does not match the specified CSR year' });
+    }
+
+    res.status(200).json({ message: 'Company deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting company:', err);
+    if (err.name === 'MongoServerSelectionError') {
+      return res.status(503).json({ message: 'Database connection error, please try again later' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   registerAdmin,
   loginAdmin,
   sendDonorInvite,
   registerDonor,
-  declineInvite
+  declineInvite,
+  createCompany,
+  getCompanies,
+  getCompanyById,
+  updateCompany,
+  deleteCompany
 };
